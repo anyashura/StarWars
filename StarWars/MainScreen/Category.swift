@@ -37,7 +37,7 @@ enum Category {
         case .planets: return UIImage(named: "planets")
         }
     }
-    
+
     var url: String {
         switch self {
             case .characters: return "https://swapi.dev/api/people/"

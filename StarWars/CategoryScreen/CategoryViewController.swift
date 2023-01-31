@@ -8,20 +8,19 @@
 import UIKit
 
 class CategoryViewController: UIViewController {
-    
+
     // MARK: - Properties
-    
+
     private let cellID = "category"
-    
+
     private lazy var backgroundImage: UIImageView = {
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
         backgroundImage.image = UIImage(named: "milkyWay")
         backgroundImage.contentMode = UIView.ContentMode.scaleToFill
         return backgroundImage
     }()
-    
+
     private var collectionView: UICollectionView?
-    
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -29,12 +28,12 @@ class CategoryViewController: UIViewController {
         view.addSubview(backgroundImage)
 
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         checkConnection()
         registerAndConfigureCollection()
     }
-    
+
     // MARK: - Private methods
     private func registerAndConfigureCollection() {
         let layout = UICollectionViewFlowLayout()
@@ -50,7 +49,6 @@ class CategoryViewController: UIViewController {
         }
         layout.itemSize = CGSize(width: (view.frame.size.width-20), height: 65)
     }
-    
 
 }
 

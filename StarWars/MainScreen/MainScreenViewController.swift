@@ -13,15 +13,14 @@ class MainScreenViewController: UIViewController {
         static let cellID = "cellID"
         static let backgroundImageName = "milkyWay"
     }
-    
 
     // MARK: - Properties
-    
+
     private let categories: [Category] = [.characters, .films, .species, .starships, .vehicles, .planets]
-    
+
     private lazy var backgroundImage: UIImageView = {
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named:Constants.backgroundImageName)
+        backgroundImage.image = UIImage(named: Constants.backgroundImageName)
         backgroundImage.contentMode = UIView.ContentMode.scaleToFill
         return backgroundImage
     }()
@@ -32,7 +31,7 @@ class MainScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(backgroundImage)
-        
+
         registerAndConfigureCollection()
     }
 
@@ -61,10 +60,10 @@ class MainScreenViewController: UIViewController {
     // MARK: - Extensions
 
 extension MainScreenViewController: UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        
+
         let categoryVC = CategoryViewController()
         navigationController?.pushViewController(categoryVC, animated: true)
       }
@@ -85,4 +84,3 @@ extension MainScreenViewController: UICollectionViewDataSource {
     }
 
 }
-

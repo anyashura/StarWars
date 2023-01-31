@@ -7,8 +7,7 @@
 
 import Foundation
 
-
-//final class NetworkManager {
+// final class NetworkManager {
 //
 //  var films: [Film] = []
 //  private let domainUrlString = "https://swapi.co/api/"
@@ -58,4 +57,4 @@ import Foundation
 //    }
 //    task.resume()
 //  }
-//}
+// }

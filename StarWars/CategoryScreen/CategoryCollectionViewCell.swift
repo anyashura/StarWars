@@ -8,9 +8,8 @@
 import UIKit
 
 class CategoryCollectionViewCell: UICollectionViewCell {
-    
+
     // MARK: - Properties
-    
 
     private let categoryImageView: UIImageView = {
         let imageView = UIImageView()
@@ -18,7 +17,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .center
         return imageView
     }()
-    
+
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -27,7 +26,6 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         return label
     }()
-    
 
     // MARK: - Override init
     override init(frame: CGRect) {
@@ -42,22 +40,20 @@ class CategoryCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Layout
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         categoryImageView.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height - 10)
         nameLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height - 10)
-        
+
     }
 
     // MARK: - Methods
-    
+
     func configure(label: String, image: UIImage) {
         categoryImageView.image = image
     }
 
 }
-
-
