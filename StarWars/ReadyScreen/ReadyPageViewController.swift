@@ -7,7 +7,7 @@
 import SnapKit
 import UIKit
 
-class ReadyPageViewController: UIViewController {
+final class ReadyPageViewController: UIViewController {
     // MARK: - Properties
 
     private let mainScreenVC = MainScreenViewController()

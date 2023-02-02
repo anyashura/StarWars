@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// MARK: - Enum
+
 enum Category {
     case characters
     case films
@@ -17,7 +19,7 @@ enum Category {
     case planets
 
     var title: String {
-    switch self {
+        switch self {
         case .characters: return "Characters"
         case .films: return "Films"
         case .species: return "Species"
@@ -28,7 +30,7 @@ enum Category {
     }
 
     var image: UIImage? {
-    switch self {
+        switch self {
         case .characters: return UIImage(named: "character")
         case .films: return UIImage(named: "films")
         case .species: return UIImage(named: "species")
@@ -40,14 +42,12 @@ enum Category {
 
     var url: String {
         switch self {
-            case .characters: return "https://swapi.dev/api/people/"
-            case .films: return "https://swapi.dev/api/films/"
-            case .species: return "https://swapi.dev/api/species/"
-            case .starships: return "https://swapi.dev/api/starships/"
-            case .vehicles: return "https://swapi.dev/api/vehicles/"
-            case .planets: return "https://swapi.dev/api/planets/"
-            }
-
+        case .characters: return "https://swapi.dev/api/people/"
+        case .films: return "https://swapi.dev/api/films/"
+        case .species: return "https://swapi.dev/api/species/"
+        case .starships: return "https://swapi.dev/api/starships/"
+        case .vehicles: return "https://swapi.dev/api/vehicles/"
+        case .planets: return "https://swapi.dev/api/planets/"
+        }
     }
-
 }

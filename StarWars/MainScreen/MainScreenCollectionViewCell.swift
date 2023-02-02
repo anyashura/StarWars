@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainScreenCollectionViewCell: UICollectionViewCell {
+final class MainScreenCollectionViewCell: UICollectionViewCell {
 
     // MARK: - Properties
 
@@ -46,9 +46,19 @@ class MainScreenCollectionViewCell: UICollectionViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        categoryImageView.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
+        categoryImageView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: contentView.frame.size.width,
+            height: contentView.frame.size.height
+        )
 
-        categoryLabel.frame = CGRect(x: 0, y: (categoryImageView.bounds.height / 1.18), width: categoryImageView.bounds.width, height: 22)
+        categoryLabel.frame = CGRect(
+            x: 0,
+            y: (categoryImageView.bounds.height / 1.18),
+            width: categoryImageView.bounds.width,
+            height: 22
+        )
     }
 
     // MARK: - Methods
@@ -57,5 +67,4 @@ class MainScreenCollectionViewCell: UICollectionViewCell {
         categoryLabel.text = label
         categoryImageView.image = image
     }
-
 }
