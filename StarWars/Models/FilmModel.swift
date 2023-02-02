@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct FilmSummary: Codable {
+struct FilmsSummary: Codable {
     let count: Int?
     let results: [ParsingModel]?
 }
@@ -27,19 +27,19 @@ struct Film: Codable {
         case releaseDate = "release_date"
         }
 
-    init(
-        title: String,
-        episodeId: Int,
-        openingCrawl: String,
-        director: String,
-        producer: String,
-        releaseDate: String
-    ) {
-        self.title = title
-        self.episodeId = episodeId
-        self.openingCrawl = openingCrawl
-        self.director = director
-        self.producer = producer
-        self.releaseDate = releaseDate
-    }
+//    init(
+//        title: String,
+//        episodeId: Int,
+//        openingCrawl: String,
+//        director: String,
+//        producer: String,
+//        releaseDate: String
+//    ) {
+//        self.title = title
+//        self.episodeId = episodeId
+//        self.openingCrawl = openingCrawl
+//        self.director = director
+//        self.producer = producer
+//        self.releaseDate = releaseDate
+//    }
 }
