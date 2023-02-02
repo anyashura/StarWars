@@ -12,9 +12,7 @@ extension UIViewController {
 
     func checkConnection() {
         if NetworkMonitor.shared.isConnected {
-//            print("Internet connection OK")
         } else {
-//            print("Internet connection FAILED")
             self.showRetryAlert()
         }
     }

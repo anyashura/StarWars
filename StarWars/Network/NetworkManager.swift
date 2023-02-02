@@ -8,9 +8,12 @@
 import Foundation
 
 final class NetworkManager {
+    // MARK: - Properties
 
     private var allObjects: [ParsingModel] = []
 
+    // MARK: - Methods
+    
     func fetchCategories(url: String, completionHandler: @escaping ([ParsingModel]?) -> Void) {
 
         guard let url = URL(string: url) else {
@@ -37,6 +40,7 @@ final class NetworkManager {
 
                 guard let data = data, let summary = try? JSONDecoder().decode(ParsingModelSummary.self, from: data) else { return }
                 completionHandler(summary.results ?? [])
+                print(summary.count)
             })
 
              task.resume()

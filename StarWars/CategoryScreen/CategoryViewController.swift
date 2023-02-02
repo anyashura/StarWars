@@ -112,7 +112,7 @@ extension CategoryViewController: UICollectionViewDelegate {
 
 extension CategoryViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        allObjects?.count ?? 2
+        allObjects?.count ?? 3
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -123,9 +123,9 @@ extension CategoryViewController: UICollectionViewDataSource {
         cell.configure(
             name: allObjects?[indexPath.row].title ?? "",
             title: allObjects?[indexPath.row].name ?? "",
-            image: UIImage(named: "temp") ?? UIImage()
-        )
+            image: UIImage(named: UserDefaults.standard.string(forKey: categoryKey)! + String(indexPath.row + 1)) ?? UIImage()
 
+            )
         return cell
     }
 

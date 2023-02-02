@@ -126,10 +126,10 @@
 		B5C9A2242986B85A00A859AF /* StarWars */ = {
 			isa = PBXGroup;
 			children = (
+				B5C9A23E2987107400A859AF /* MainScreen */,
+				B5C9A23D2987105F00A859AF /* ReadyScreen */,
 				B5D8A4DE29886A9A003FCE80 /* Network */,
 				B5C17979298C23B2001126FC /* Models */,
-				B5C9A23D2987105F00A859AF /* ReadyScreen */,
-				B5C9A23E2987107400A859AF /* MainScreen */,
 				B5D8A4DC29886A5E003FCE80 /* CategoryScreen */,
 				B5D8A4DD29886A77003FCE80 /* DetailScreen */,
 				B5C9A22E2986B85B00A859AF /* Assets.xcassets */,

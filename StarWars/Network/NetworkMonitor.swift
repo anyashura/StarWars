@@ -9,13 +9,17 @@ import Foundation
 import Network
 
 final class NetworkMonitor {
-
+    
+    // MARK: - Properties
+    
     static var shared = NetworkMonitor()
 
     var isConnected: Bool = false
 
     private var queue = DispatchQueue.global()
     private var monitor = NWPathMonitor()
+    
+    // MARK: - Methods
 
     func startMonitoring() {
         monitor.start(queue: queue)
