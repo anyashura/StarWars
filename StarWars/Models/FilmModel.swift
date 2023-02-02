@@ -26,7 +26,7 @@ struct Film: Codable {
         case openingCrawl = "opening_crawl"
         case releaseDate = "release_date"
         }
-    
+
     init(
         title: String,
         episodeId: Int,

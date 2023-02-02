@@ -7,9 +7,6 @@
 
 import Foundation
 
-
-
-
 // struct People: Codable {
 //  let count: Int
 //  let next: String?

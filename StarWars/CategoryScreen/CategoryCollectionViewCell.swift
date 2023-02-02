@@ -29,7 +29,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         return label
     }()
-    
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -41,10 +41,9 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
         label.textColor = .white
         return label
     }()
-    
 
     // MARK: - Override init
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.contentView.layer.cornerRadius = 30.0
@@ -55,7 +54,7 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     }
 
     // MARK: - Required init
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

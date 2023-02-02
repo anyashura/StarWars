@@ -9,9 +9,9 @@ import Foundation
 import Network
 
 final class NetworkMonitor {
-    
+
     static var shared = NetworkMonitor()
-    
+
     var isConnected: Bool = false
 
     private var queue = DispatchQueue.global()

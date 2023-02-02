@@ -8,7 +8,7 @@
 import UIKit
 
 final class DetailViewController: UIViewController {
-    
+
     // MARK: - Properties
 
     private let cellID = "detailInformation"
@@ -19,23 +19,16 @@ final class DetailViewController: UIViewController {
         backgroundImage.contentMode = UIView.ContentMode.scaleToFill
         return backgroundImage
     }()
-    
+
     private lazy var picture: UIImageView = {
         let image = UIImageView(frame: UIScreen.main.bounds)
         image.image = UIImage(named: "milkyWay")
         image.contentMode = UIView.ContentMode.scaleAspectFit
         return image
     }()
-    
+
     private var tableView: UITableView?
-    
-    
-    
-    
-    
-    
-    
-    
+
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +38,7 @@ final class DetailViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         checkConnection()
-        
+
     }
 
 }

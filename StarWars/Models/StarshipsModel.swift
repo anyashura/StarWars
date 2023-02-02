@@ -7,7 +7,7 @@
 
 import Foundation
 
-//struct Starship: Decodable {
+// struct Starship: Decodable {
 //  var name: String
 //  var model: String
 //  var manufacturer: String
@@ -36,4 +36,4 @@ import Foundation
 //    case starshipClass = "starship_class"
 //    case films
 //  }
-//}
+// }

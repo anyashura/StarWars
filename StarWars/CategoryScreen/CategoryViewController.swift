@@ -14,10 +14,10 @@ final class CategoryViewController: UIViewController {
     private let categoryKey = "categoryKey"
     private let cellID = "category"
     private let network = NetworkManager()
-    
+
     private var allObjects: [ScreenModel]?
     private var collectionView: UICollectionView?
-    
+
     private lazy var url = UserDefaults.standard.string(forKey: nameKey)
     private lazy var backgroundImage: UIImageView = {
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
@@ -31,13 +31,13 @@ final class CategoryViewController: UIViewController {
         super.viewDidLoad()
         view.addSubview(backgroundImage)
         setTitile()
-        
+
         registerAndConfigureCollection()
-        
+
         network.fetchCategories(url: url ?? "https://swapi.dev/api/people/", completionHandler: {objects in
             self.allObjects = objects
             print(self.allObjects)
-            DispatchQueue.main.async{
+            DispatchQueue.main.async {
                 self.collectionView?.reloadData()
             }
         })
@@ -48,7 +48,7 @@ final class CategoryViewController: UIViewController {
     }
 
     // MARK: - Private methods
-    
+
     private func setTitile() {
         title = UserDefaults.standard.string(forKey: categoryKey)
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -60,10 +60,10 @@ final class CategoryViewController: UIViewController {
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.backgroundColor = .clear
-        
+
         collectionView?.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
         view.addSubview(collectionView ?? UICollectionView())
-        
+
         collectionView?.snp.makeConstraints {
             $0.top.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
             $0.left.right.equalTo(view).inset(10)
@@ -71,7 +71,6 @@ final class CategoryViewController: UIViewController {
         layout.itemSize = CGSize(width: (view.frame.size.width - 20), height: 65)
     }
 }
-
 
     // MARK: - Extensions
 
@@ -85,7 +84,7 @@ extension CategoryViewController: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
+
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as? CategoryCollectionViewCell else {
         return UICollectionViewCell()
         }
