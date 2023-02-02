@@ -13,9 +13,10 @@ final class CategoryViewController: UIViewController {
     private let nameKey = "url"
     private let categoryKey = "categoryKey"
     private let cellID = "category"
+    private let spinner = UIActivityIndicatorView(style: .large)
     private let network = NetworkManager()
 
-    private var allObjects: [ScreenModel]?
+    private var allObjects: [ParsingModel]?
     private var collectionView: UICollectionView?
 
     private lazy var url = UserDefaults.standard.string(forKey: nameKey)
@@ -33,13 +34,15 @@ final class CategoryViewController: UIViewController {
         setTitile()
 
         registerAndConfigureCollection()
-
+        startLoader()
         network.fetchCategories(url: url ?? "https://swapi.dev/api/people/", completionHandler: {objects in
             self.allObjects = objects
             print(self.allObjects)
             DispatchQueue.main.async {
+                self.stopLoader()
                 self.collectionView?.reloadData()
             }
+            
         })
     }
 
@@ -60,6 +63,7 @@ final class CategoryViewController: UIViewController {
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.backgroundColor = .clear
+        collectionView?.showsVerticalScrollIndicator = false
 
         collectionView?.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
         view.addSubview(collectionView ?? UICollectionView())
@@ -74,7 +78,35 @@ final class CategoryViewController: UIViewController {
 
     // MARK: - Extensions
 
+extension CategoryViewController {
+    
+    private func startLoader() {
+        view.addSubview(spinner)
+        spinner.center = self.view.center
+        spinner.color = .white
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
+        view.bringSubviewToFront(spinner)
+    }
+
+    private func stopLoader() {
+        spinner.stopAnimating()
+        spinner.removeFromSuperview()
+    }
+}
+
 extension CategoryViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let viewController = DetailViewController()
+        
+//        switch category {
+//        case .films: viewController = FilmsViewController()
+//        default: viewController = FilmsViewController()
+//        }
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 
 }
 

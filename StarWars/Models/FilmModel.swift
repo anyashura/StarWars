@@ -9,7 +9,7 @@ import Foundation
 
 struct FilmSummary: Codable {
     let count: Int?
-    let results: [ScreenModel]?
+    let results: [ParsingModel]?
 }
 
 struct Film: Codable {

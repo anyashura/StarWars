@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct ScreenModelSummary: Codable {
+struct ParsingModelSummary: Codable {
     let count: Int?
-    let results: [ScreenModel]?
+    let results: [ParsingModel]?
 }
 
-struct ScreenModel: Codable {
+struct ParsingModel: Codable {
     let title: String?
     let name: String?
 }
