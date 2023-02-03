@@ -105,10 +105,15 @@ final class DetailViewController: UIViewController {
             textForCollection =
             """
                 Birth year: \(String(describing: details?.birthYear ?? "No"))
+            
                 Gender: \(String(describing: details?.gender ?? ""))
+            
                 Eye color: \(String(describing: details?.eyeColor ?? "No"))
+            
                 Hair color: \(String(describing: details?.hairColor ?? "No"))
+            
                 Skin Color: \(String(describing: details?.skinColor ?? "No"))
+            
                 Height: \(String(describing: details?.height ?? "No"))
             """
         }
