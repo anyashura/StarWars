@@ -25,21 +25,5 @@ struct Film: Codable {
         case episodeId = "episode_id"
         case openingCrawl = "opening_crawl"
         case releaseDate = "release_date"
-        }
-
-//    init(
-//        title: String,
-//        episodeId: Int,
-//        openingCrawl: String,
-//        director: String,
-//        producer: String,
-//        releaseDate: String
-//    ) {
-//        self.title = title
-//        self.episodeId = episodeId
-//        self.openingCrawl = openingCrawl
-//        self.director = director
-//        self.producer = producer
-//        self.releaseDate = releaseDate
-//    }
+    }
 }

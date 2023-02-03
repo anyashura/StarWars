@@ -8,31 +8,33 @@ import SnapKit
 import UIKit
 
 final class ReadyPageViewController: UIViewController {
-    // MARK: - Properties
+    // MARK: - Enum
+    private enum Constants {
+        static let imageName = "starWarsImage"
+        static let labelText = "Explore the Star Wars universe"
+        static let fontName = "Arial-BoldItalicMT"
+        static let buttonTitle = "Let's go!  🚀"
+    }
 
+    // MARK: - Properties
     private let mainScreenVC = MainScreenViewController()
+
+    private var backgroundImage: UIImageView?
 
     private lazy var starWarsImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "starWarsImage")
+        image.image = UIImage(named: Constants.imageName)
         image.contentMode = UIView.ContentMode.scaleAspectFit
         return image
-    }()
-
-    private lazy var backgroundImage: UIImageView = {
-        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "milkyWay")
-        backgroundImage.contentMode = UIView.ContentMode.scaleToFill
-        return backgroundImage
     }()
 
     private lazy var textLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 2
-        label.text = "Explore the Star Wars universe"
+        label.text = Constants.labelText
         label.textColor = .white
         label.textAlignment = .center
-        label.font = UIFont(name: "Arial-BoldItalicMT", size: 24)
+        label.font = UIFont(name: Constants.fontName, size: 24)
         return label
     }()
 
@@ -43,7 +45,7 @@ final class ReadyPageViewController: UIViewController {
         button.clipsToBounds = true
         button.layer.borderColor = UIColor.white.cgColor
         button.layer.borderWidth = 1
-        button.setTitle("Let's go!  🚀", for: .normal)
+        button.setTitle(Constants.buttonTitle, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
         button.isUserInteractionEnabled = true
         button.addTarget(self, action: #selector(gotoMainVC), for: .touchUpInside)
@@ -51,10 +53,9 @@ final class ReadyPageViewController: UIViewController {
     }()
 
     // MARK: - Lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(backgroundImage)
+        backgroundImage = setBackgroundImage()
         configureStarWarsImage()
         configureButton()
         configureTextLabel()
@@ -67,7 +68,6 @@ final class ReadyPageViewController: UIViewController {
     // MARK: - Private methods
 
     @objc private func gotoMainVC() {
-        print("Button tapped!")
         self.navigationController?.pushViewController(mainScreenVC, animated: true)
     }
 

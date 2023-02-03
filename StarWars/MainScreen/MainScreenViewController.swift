@@ -8,30 +8,25 @@
 import UIKit
 
 final class MainScreenViewController: UIViewController {
+    // MARK: - Enum
+    private enum Constants {
+        static let nameKey = "url"
+        static let categoryKey = "categoryKey"
+        static let cellID = "cellID"
+        static let title = "Categories"
+        static var url = "https://swapi.dev/api/people/"
+    }
 
     // MARK: - Properties
-
-    private let nameKey = "url"
-    private let categoryKey = "categoryKey"
-    private let cellID = "cellID"
-    private let backgroundImageName = "milkyWay"
     private let categories: [Category] = [.characters, .films, .species, .starships, .vehicles, .planets]
-    private var url = "https://swapi.dev/api/people/"
     private var collectionView: UICollectionView?
     private var films: [Film]?
-
-    private lazy var backgroundImage: UIImageView = {
-        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: backgroundImageName)
-        backgroundImage.contentMode = UIView.ContentMode.scaleToFill
-        return backgroundImage
-    }()
+    private var backgroundImage: UIImageView?
 
     // MARK: - Lifecycle
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(backgroundImage)
+        backgroundImage = setBackgroundImage()
         setTitle()
         registerAndConfigureCollection()
     }
@@ -43,7 +38,7 @@ final class MainScreenViewController: UIViewController {
     // MARK: - Private methods
 
     private func setTitle() {
-        title = "Categories"
+        title = Constants.title
         navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
         navigationController?.navigationBar.tintColor = UIColor.white
     }
@@ -56,7 +51,7 @@ final class MainScreenViewController: UIViewController {
         collectionView?.delegate = self
         collectionView?.dataSource = self
         collectionView?.backgroundColor = .clear
-        collectionView?.register(MainScreenCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView?.register(MainScreenCollectionViewCell.self, forCellWithReuseIdentifier: Constants.cellID)
 
         view.addSubview(collectionView ?? UICollectionView())
 
@@ -71,20 +66,15 @@ final class MainScreenViewController: UIViewController {
 }
 
     // MARK: - Extensions
-
 extension MainScreenViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let category = categories[indexPath.row]
-        url = category.url
-        UserDefaults.standard.set(url, forKey: nameKey)
-        UserDefaults.standard.set(category.title, forKey: categoryKey)
+        Constants.url = category.url
+        UserDefaults.standard.set(Constants.url, forKey: Constants.nameKey)
+        UserDefaults.standard.set(category.title, forKey: Constants.categoryKey)
         let viewController = CategoryViewController()
-//        switch category {
-//        case .films: viewController = FilmsViewController()
-//        default: viewController = FilmsViewController()
-//        }
         navigationController?.pushViewController(viewController, animated: true)
     }
 }
@@ -96,7 +86,7 @@ extension MainScreenViewController: UICollectionViewDataSource {
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as? MainScreenCollectionViewCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.cellID, for: indexPath) as? MainScreenCollectionViewCell else { return UICollectionViewCell() }
 
         cell.configure(
             label: categories[indexPath.row].title,
@@ -104,5 +94,4 @@ extension MainScreenViewController: UICollectionViewDataSource {
         )
         return cell
     }
-
 }

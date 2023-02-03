@@ -7,20 +7,26 @@
 
 import Foundation
 
+struct CharactersSummary: Codable {
+    let count: Int?
+    let results: [ParsingModel]?
+}
 
+struct Character: Codable {
+    let name: String
+    let birthYear: String
+    let eyeColor: String
+    let gender: String
+    let hairColor: String
+    let skinColor: String
+    let height: String
+    let homeworld: String
 
-//На экране отображен портрет персонажа
-//Год рождения
-//Вес
-//Рост
-//Пол
-//Цвет волос
-//Цвет кожи
-//Родная планета
-//Раса
-//Раса - кликабельный текст - при нажатии открывается описание расы:
-//Классификация
-//Язык
-//Среднее время жизни
-//Средний рост
-//Возможные цвета глаз, кожи, волос
+    enum CodingKeys: String, CodingKey {
+        case name, gender, height, homeworld
+        case birthYear = "birth_year"
+        case eyeColor = "eye_color"
+        case hairColor = "hair_color"
+        case skinColor = "skin_color"
+    }
+}

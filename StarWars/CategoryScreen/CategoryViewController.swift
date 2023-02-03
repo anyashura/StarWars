@@ -8,41 +8,38 @@
 import UIKit
 
 final class CategoryViewController: UIViewController {
+    // MARK: - Enum
+    private enum Constants {
+        static let urlKey = "url"
+        static let detailURLKey = "detail"
+        static let categoryKey = "categoryKey"
+        static let idKey = "IDKey"
+        static let cellID = "category"
+        static let defaultURL = "https://swapi.dev/api/people/"
+    }
 
     // MARK: - Properties
-    private let nameKey = "url"
-    private let categoryKey = "categoryKey"
-    private let cellID = "category"
     private let spinner = UIActivityIndicatorView(style: .large)
     private let network = NetworkManager()
-
     private var allObjects: [ParsingModel]?
     private var collectionView: UICollectionView?
-
-    private lazy var url = UserDefaults.standard.string(forKey: nameKey)
-    private lazy var backgroundImage: UIImageView = {
-        let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
-        backgroundImage.image = UIImage(named: "milkyWay")
-        backgroundImage.contentMode = UIView.ContentMode.scaleToFill
-        return backgroundImage
-    }()
+    private var backgroundImage: UIImageView?
+    private lazy var url = UserDefaults.standard.string(forKey: Constants.urlKey)
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(backgroundImage)
-        setTitile()
-
+        backgroundImage = setBackgroundImage()
+        setTitile(Constants.categoryKey)
         registerAndConfigureCollection()
-        startLoader()
-        network.fetchCategories(url: url ?? "https://swapi.dev/api/people/", completionHandler: {objects in
+        startLoader(spinner: spinner)
+        network.fetchCategories(url: url ?? Constants.defaultURL, completionHandler: {
+            objects in
             self.allObjects = objects
-            print(self.allObjects)
             DispatchQueue.main.async {
-                self.stopLoader()
+                self.stopLoader(spinner: self.spinner)
                 self.collectionView?.reloadData()
             }
-            
         })
     }
 
@@ -52,12 +49,8 @@ final class CategoryViewController: UIViewController {
 
     // MARK: - Private methods
 
-    private func setTitile() {
-        title = UserDefaults.standard.string(forKey: categoryKey)
-        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
-        navigationController?.navigationBar.tintColor = UIColor.white
-    }
     private func registerAndConfigureCollection() {
+
         let layout = UICollectionViewFlowLayout()
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView?.delegate = self
@@ -65,7 +58,7 @@ final class CategoryViewController: UIViewController {
         collectionView?.backgroundColor = .clear
         collectionView?.showsVerticalScrollIndicator = false
 
-        collectionView?.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView?.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: Constants.cellID)
         view.addSubview(collectionView ?? UICollectionView())
 
         collectionView?.snp.makeConstraints {
@@ -79,54 +72,43 @@ final class CategoryViewController: UIViewController {
     // MARK: - Extensions
 
 extension CategoryViewController {
-    
-    private func startLoader() {
-        view.addSubview(spinner)
-        spinner.center = self.view.center
-        spinner.color = .white
-        spinner.startAnimating()
-        spinner.hidesWhenStopped = true
-        view.bringSubviewToFront(spinner)
-    }
 
-    private func stopLoader() {
-        spinner.stopAnimating()
-        spinner.removeFromSuperview()
+    func setTitile(_ name: String) {
+        title = UserDefaults.standard.string(forKey: name)
+        navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.white]
+        navigationController?.navigationBar.tintColor = UIColor.white
     }
 }
 
 extension CategoryViewController: UICollectionViewDelegate {
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let viewController = DetailViewController()
-        
-//        switch category {
-//        case .films: viewController = FilmsViewController()
-//        default: viewController = FilmsViewController()
-//        }
+        let detailURL = (url! + String(indexPath.row + 1) + "/")
+        UserDefaults.standard.set(detailURL, forKey: Constants.detailURLKey)
+        UserDefaults.standard.set(indexPath.row + 1, forKey: Constants.idKey)
         navigationController?.pushViewController(viewController, animated: true)
     }
-
 }
 
 extension CategoryViewController: UICollectionViewDataSource {
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        allObjects?.count ?? 3
+        allObjects?.count ?? 0
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as? CategoryCollectionViewCell else {
-        return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.cellID, for: indexPath) as? CategoryCollectionViewCell else {
+            return UICollectionViewCell()
         }
         cell.configure(
             name: allObjects?[indexPath.row].title ?? "",
             title: allObjects?[indexPath.row].name ?? "",
-            image: UIImage(named: UserDefaults.standard.string(forKey: categoryKey)! + String(indexPath.row + 1)) ?? UIImage()
+            image: UIImage(named: UserDefaults.standard.string(forKey: Constants.categoryKey)! + String(indexPath.row + 1)) ?? UIImage()
 
             )
         return cell
     }
-
 }

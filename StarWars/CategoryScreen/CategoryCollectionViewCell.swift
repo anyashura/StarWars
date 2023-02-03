@@ -8,12 +8,15 @@
 import UIKit
 
 final class CategoryCollectionViewCell: UICollectionViewCell {
+    // MARK: - Enum
+    private enum Constants {
+        static let fontName = "Arial-BoldItalicMT"
+    }
 
     // MARK: - Properties
-
     private let categoryImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "species")
+        imageView.image = UIImage(named: "")
         imageView.contentMode = .center
         return imageView
     }()
@@ -21,10 +24,10 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     private let nameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Species"
-        label.font = UIFont(name: "Arial-BoldItalicMT", size: 22)
+        label.text = ""
+        label.font = UIFont(name: Constants.fontName, size: 22)
         label.numberOfLines = 2
-        label.backgroundColor = .clear
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.textColor = .white
         return label
@@ -33,8 +36,8 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "1965"
-        label.font = UIFont(name: "Arial-BoldItalicMT", size: 22)
+        label.text = ""
+        label.font = UIFont(name: Constants.fontName, size: 22)
         label.numberOfLines = 2
         label.backgroundColor = .clear
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
@@ -64,13 +67,11 @@ final class CategoryCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         categoryImageView.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height - 10)
-        nameLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width - 10, height: contentView.frame.size.height - 10)
-        titleLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width - 10, height: contentView.frame.size.height - 10)
-
+        nameLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
+        titleLabel.frame = CGRect(x: 0, y: 0, width: contentView.frame.size.width, height: contentView.frame.size.height)
     }
 
     // MARK: - Methods
-
     func configure(name: String?, title: String?, image: UIImage) {
         categoryImageView.image = image
         nameLabel.text = name

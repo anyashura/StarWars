@@ -8,12 +8,16 @@
 import UIKit
 
 final class MainScreenCollectionViewCell: UICollectionViewCell {
+    // MARK: - Enum
+    private enum Constants {
+        static let categoryImageName = "films"
+        static let fontName = "Arial-BoldItalicMT"
+    }
 
     // MARK: - Properties
-
     private let categoryImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "films")
+        imageView.image = UIImage(named: Constants.categoryImageName)
         imageView.contentMode = .center
         return imageView
     }()
@@ -21,10 +25,10 @@ final class MainScreenCollectionViewCell: UICollectionViewCell {
     private let categoryLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.text = "Films"
-        label.font = UIFont(name: "Arial-BoldItalicMT", size: 17)
+        label.text = ""
+        label.font = UIFont(name: Constants.fontName, size: 17)
         label.textColor = .white
-        label.backgroundColor = .lightGray
+        label.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         return label
     }()
 
@@ -43,7 +47,6 @@ final class MainScreenCollectionViewCell: UICollectionViewCell {
     }
 
     // MARK: - Layout
-
     override func layoutSubviews() {
         super.layoutSubviews()
         categoryImageView.frame = CGRect(
@@ -62,7 +65,6 @@ final class MainScreenCollectionViewCell: UICollectionViewCell {
     }
 
     // MARK: - Methods
-
     func configure(label: String, image: UIImage) {
         categoryLabel.text = label
         categoryImageView.image = image

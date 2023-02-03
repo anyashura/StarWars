@@ -7,22 +7,29 @@
 
 import Foundation
 
-//struct FilmsSummary: Codable {
-//    let count: Int?
-//    let results: [ParsingModel]?
-//}
-//
-//struct Film: Codable {
-//    let title: String
-//    let episodeId: Int
-//    let openingCrawl: String
-//    let director: String
-//    let producer: String
-//    let releaseDate: String
-//
-//    enum CodingKeys: String, CodingKey {
-//        case title, producer, director
-//        case episodeId = "episode_id"
-//        case openingCrawl = "opening_crawl"
-//        case releaseDate = "release_date"
-//        }
+struct SpeciesSummary: Codable {
+    let count: Int?
+    let results: [ParsingModel]?
+}
+
+struct Species: Codable {
+    let name: String
+    let classification: String
+    let designation: String
+    let eyeColors: String
+    let hairColors: String
+    let skinColors: String
+    let homeworld: String
+    let language: String
+    let averageHeight: String
+    let averageLifespan: String
+
+    enum CodingKeys: String, CodingKey {
+        case name, homeworld, classification, designation, language
+        case eyeColors = "eye_colors"
+        case hairColors = "hair_colors"
+        case skinColors = "skin_colors"
+        case averageHeight = "average_height"
+        case averageLifespan = "average_lifespan"
+    }
+}
