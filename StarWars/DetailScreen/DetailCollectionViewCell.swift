@@ -26,7 +26,7 @@ class DetailCollectionViewCell: UICollectionViewCell {
         let text = UITextView()
         text.textAlignment = .natural
         text.isEditable = false
-        text.font = UIFont(name: Constants.fontName, size: 20)
+        text.font = UIFont(name: Constants.fontName, size: 18)
         text.showsVerticalScrollIndicator = false
         text.backgroundColor = .clear
         text.textColor = .white

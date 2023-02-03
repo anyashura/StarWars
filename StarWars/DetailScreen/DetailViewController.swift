@@ -29,12 +29,14 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundImage = setBackgroundImage()
+        
         startLoader(spinner: spinner)
         networkManager.fetchDetail(url: UserDefaults.standard.string(forKey: Constants.detailURLKey) ?? Constants.defaultURL, completionHandler: {details in
             self.details = details
             DispatchQueue.main.async {
                 self.stopLoader(spinner: self.spinner)
                 self.collectionView?.reloadData()
+                self.addTitle()
             }
         })
         registerAndConfigureCollection()
@@ -45,6 +47,14 @@ final class DetailViewController: UIViewController {
     }
 
     // MARK: - Private methods
+    
+    private func addTitle() {
+        if details?.title != nil {
+            title = details?.title
+        } else if details?.name != nil {
+            title = details?.name
+        }
+    }
 
     private func addText() -> String {
         var textForCollection = ""
@@ -52,12 +62,11 @@ final class DetailViewController: UIViewController {
         if UserDefaults.standard.string(forKey: Constants.categoryKey) == "Films" {
             textForCollection =
             """
-                     \(String(describing: details?.title ?? "No" ))
-
             Release date: \(String(describing: details?.releaseDate ?? "No"))
             Episode Id: \(String(describing: details?.episodeId ?? 0))
             Director: \(String(describing: details?.director ?? "No"))
             Producer: \(String(describing: details?.producer ?? "No"))
+            
             Opening crawl:
             \(String(describing: details?.openingCrawl ?? "No"))
             """
@@ -66,8 +75,6 @@ final class DetailViewController: UIViewController {
         if UserDefaults.standard.string(forKey: Constants.categoryKey) == "Species" {
             textForCollection =
             """
-                     \(String(describing: details?.name ?? "No" ))
-
             Classification: \(String(describing: details?.classification ?? "No"))
             Designation: \(String(describing: details?.designation ?? ""))
             Eye colors: \(String(describing: details?.eyeColors ?? "No"))
@@ -82,8 +89,6 @@ final class DetailViewController: UIViewController {
         if UserDefaults.standard.string(forKey: Constants.categoryKey) == "Starships" || UserDefaults.standard.string(forKey: Constants.categoryKey) == "Vehicles" {
             textForCollection =
             """
-                     \(String(describing: details?.name ?? "No" ))
-
             Model: \(String(describing: details?.model ?? "No"))
             Manufacturer: \(String(describing: details?.manufacturer ?? ""))
             Cost: \(String(describing: details?.cost ?? "No"))
@@ -99,22 +104,18 @@ final class DetailViewController: UIViewController {
         if UserDefaults.standard.string(forKey: Constants.categoryKey) == "Characters" {
             textForCollection =
             """
-                     \(String(describing: details?.name ?? "No" ))
-
-            Birth year: \(String(describing: details?.birthYear ?? "No"))
-            Gender: \(String(describing: details?.gender ?? ""))
-            Eye color: \(String(describing: details?.eyeColor ?? "No"))
-            Hair color: \(String(describing: details?.hairColor ?? "No"))
-            Skin Color: \(String(describing: details?.skinColor ?? "No"))
-            Language: \(String(describing: details?.height ?? "No"))
+                Birth year: \(String(describing: details?.birthYear ?? "No"))
+                Gender: \(String(describing: details?.gender ?? ""))
+                Eye color: \(String(describing: details?.eyeColor ?? "No"))
+                Hair color: \(String(describing: details?.hairColor ?? "No"))
+                Skin Color: \(String(describing: details?.skinColor ?? "No"))
+                Height: \(String(describing: details?.height ?? "No"))
             """
         }
 
         if UserDefaults.standard.string(forKey: Constants.categoryKey) == "Planets" {
             textForCollection =
             """
-                    \(String(describing: details?.name ?? "No" ))
-
                 Climate: \(String(describing: details?.climate ?? "No"))
                 Diameter: \(String(describing: details?.diameter ?? ""))
                 Gravity: \(String(describing: details?.gravity ?? "No"))
