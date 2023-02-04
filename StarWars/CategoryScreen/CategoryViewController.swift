@@ -33,12 +33,12 @@ final class CategoryViewController: UIViewController {
         setTitile(Constants.categoryKey)
         registerAndConfigureCollection()
         startLoader(spinner: spinner)
-        network.fetchCategories(url: url ?? Constants.defaultURL, completionHandler: {
+        network.fetchCategories(url: url ?? Constants.defaultURL, completionHandler: { [weak self]
             objects in
-            self.allObjects = objects
+            self?.allObjects = objects
             DispatchQueue.main.async {
-                self.stopLoader(spinner: self.spinner)
-                self.collectionView?.reloadData()
+                self?.stopLoader(spinner: self?.spinner ?? UIActivityIndicatorView())
+                self?.collectionView?.reloadData()
             }
         })
     }

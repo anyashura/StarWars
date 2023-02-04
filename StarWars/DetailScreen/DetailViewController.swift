@@ -31,12 +31,12 @@ final class DetailViewController: UIViewController {
         backgroundImage = setBackgroundImage()
         
         startLoader(spinner: spinner)
-        networkManager.fetchDetail(url: UserDefaults.standard.string(forKey: Constants.detailURLKey) ?? Constants.defaultURL, completionHandler: {details in
-            self.details = details
+        networkManager.fetchDetail(url: UserDefaults.standard.string(forKey: Constants.detailURLKey) ?? Constants.defaultURL, completionHandler: { [weak self] details in
+            self?.details = details
             DispatchQueue.main.async {
-                self.stopLoader(spinner: self.spinner)
-                self.collectionView?.reloadData()
-                self.addTitle()
+                self?.stopLoader(spinner: self?.spinner ?? UIActivityIndicatorView())
+                self?.collectionView?.reloadData()
+                self?.addTitle()
             }
         })
         registerAndConfigureCollection()
