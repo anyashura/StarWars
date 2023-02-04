@@ -7,7 +7,15 @@
 
 import Foundation
 
-final class NetworkManager {
+protocol NetworkService {
+    
+    func fetchCategories(url: String, completionHandler: @escaping ([ParsingModel]?) -> Void)
+}
+
+final class NetworkManager: NetworkService {
+    // MARK: - Properties
+    
+    static var shared = NetworkManager()
 
     // MARK: - Methods
     func fetchCategories(url: String, completionHandler: @escaping ([ParsingModel]?) -> Void) {

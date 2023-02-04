@@ -9,7 +9,7 @@ import UIKit
 
 final class DetailViewController: UIViewController {
     // MARK: - Enum
-    private enum Constants {
+    enum Constants {
         static let cellIDDetail = "detailInformation"
         static let detailURLKey = "detail"
         static let categoryKey = "categoryKey"
@@ -18,120 +18,83 @@ final class DetailViewController: UIViewController {
     }
 
     // MARK: - Properties
+    let networkForDetailVC = NetworkManagerForDetailScreen.shared
+    
     private let spinner = UIActivityIndicatorView(style: .large)
-    private let networkManager = NetworManagerForDetailScreen()
-
     private var collectionView: UICollectionView?
-    private var details: DetailParsingModel?
     private var backgroundImage: UIImageView?
+    var textForCollection = "No data"
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         backgroundImage = setBackgroundImage()
-        
-        startLoader(spinner: spinner)
-        networkManager.fetchDetail(url: UserDefaults.standard.string(forKey: Constants.detailURLKey) ?? Constants.defaultURL, completionHandler: { [weak self] details in
-            self?.details = details
-            DispatchQueue.main.async {
-                self?.stopLoader(spinner: self?.spinner ?? UIActivityIndicatorView())
-                self?.collectionView?.reloadData()
-                self?.addTitle()
-            }
-        })
         registerAndConfigureCollection()
+        startLoader(spinner: spinner)
+        getData()
+        stopLoader(spinner: spinner)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         checkConnection()
     }
 
-    // MARK: - Private methods
+    // MARK: - Methods
     
-    private func addTitle() {
-        if details?.title != nil {
-            title = details?.title
-        } else if details?.name != nil {
-            title = details?.name
+    func getFilmAndUpdateCollection(film: Film) {
+        textForCollection = "Release date: \(film.releaseDate) \nEpisode Id: \(film.episodeId) \nDirector: \(film.director) \nProducer: \(film.producer) \n\nOpening crawl: \n\(film.openingCrawl)"
+       
+        DispatchQueue.main.async {
+            self.title = film.title
+            self.collectionView?.reloadData()
         }
     }
-
-    private func addText() -> String {
-        var textForCollection = ""
-        guard UserDefaults.standard.string(forKey: Constants.categoryKey) != nil else { return "No Data"}
-        if UserDefaults.standard.string(forKey: Constants.categoryKey) == "Films" {
-            textForCollection =
-            """
-            Release date: \(String(describing: details?.releaseDate ?? "No"))
-            Episode Id: \(String(describing: details?.episodeId ?? 0))
-            Director: \(String(describing: details?.director ?? "No"))
-            Producer: \(String(describing: details?.producer ?? "No"))
-            
-            Opening crawl:
-            \(String(describing: details?.openingCrawl ?? "No"))
-            """
+    
+    func getPlanetAndUpdateCollection(planet: Planet) {
+        textForCollection = "Climate: \(planet.climate) \nDiameter: \(planet.diameter) \nGravity: \(planet.gravity) \nRotation period: \(planet.rotationPeriod) \nTerrain: \(planet.terrain) \nSurface water: \(planet.surfaceWater)"
+        
+        DispatchQueue.main.async {
+            self.title = planet.name
+            self.collectionView?.reloadData()
         }
-
-        if UserDefaults.standard.string(forKey: Constants.categoryKey) == "Species" {
-            textForCollection =
-            """
-            Classification: \(String(describing: details?.classification ?? "No"))
-            Designation: \(String(describing: details?.designation ?? ""))
-            Eye colors: \(String(describing: details?.eyeColors ?? "No"))
-            Hair colors: \(String(describing: details?.hairColors ?? "No"))
-            Skin Colors: \(String(describing: details?.skinColors ?? "No"))
-            Language: \(String(describing: details?.language ?? "No"))
-            Average height: \(String(describing: details?.averageHeight ?? "No"))
-            Average lifespan: \(String(describing: details?.averageLifespan ?? "No"))
-            """
-        }
-
-        if UserDefaults.standard.string(forKey: Constants.categoryKey) == "Starships" || UserDefaults.standard.string(forKey: Constants.categoryKey) == "Vehicles" {
-            textForCollection =
-            """
-            Model: \(String(describing: details?.model ?? "No"))
-            Manufacturer: \(String(describing: details?.manufacturer ?? ""))
-            Cost: \(String(describing: details?.cost ?? "No"))
-            Length: \(String(describing: details?.length ?? "No"))
-            Maximum speed: \(String(describing: details?.maximumSpeed ?? "No"))
-            Crew: \(String(describing: details?.crew ?? ""))
-            Passengers: \(String(describing: details?.passengers ?? "No"))
-            Cargo capacity: \(String(describing: details?.cargoCapacity ?? "No"))
-            Starship class: \(String(describing: details?.starshipClass ?? "No"))
-            """
-        }
-
-        if UserDefaults.standard.string(forKey: Constants.categoryKey) == "Characters" {
-            textForCollection =
-            """
-                Birth year: \(String(describing: details?.birthYear ?? "No"))
-            
-                Gender: \(String(describing: details?.gender ?? ""))
-            
-                Eye color: \(String(describing: details?.eyeColor ?? "No"))
-            
-                Hair color: \(String(describing: details?.hairColor ?? "No"))
-            
-                Skin Color: \(String(describing: details?.skinColor ?? "No"))
-            
-                Height: \(String(describing: details?.height ?? "No"))
-            """
-        }
-
-        if UserDefaults.standard.string(forKey: Constants.categoryKey) == "Planets" {
-            textForCollection =
-            """
-                Climate: \(String(describing: details?.climate ?? "No"))
-                Diameter: \(String(describing: details?.diameter ?? ""))
-                Gravity: \(String(describing: details?.gravity ?? "No"))
-                Rotation period: \(String(describing: details?.rotationPeriod ?? "No"))
-                Terrain: \(String(describing: details?.terrain ?? ""))
-                Surface water: \(String(describing: details?.surfaceWater ?? "No"))
-            """
-        }
-
-        return textForCollection
     }
+    
+    func getSpeciesAndUpdateCollection(species: Species) {
+        textForCollection = "Classification: \(species.classification) \nDesignation: \(species.designation) \nEye colors: \(species.eyeColors) \nHair colors: \(species.hairColors) \nSkin Colors: \(species.skinColors) \nLanguage: \(species.language) \nAverage height: \(species.averageHeight) \nAverage lifespan: \(species.averageLifespan)"
+        
+        DispatchQueue.main.async {
+            self.title = species.name
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    func getStarshipAndUpdateCollection(starship: Starship) {
+        textForCollection = "Model: \(starship.model) \nManufacturer: \(starship.manufacturer) \nCost: \(starship.cost) \nLength: \(starship.length) \nMaximum speed: \(starship.maximumSpeed) \nCrew: \(starship.crew) \nPassengers: \(starship.passengers) \nCargo capacity: \(starship.cargoCapacity) \nStarship class: \(starship.starshipClass)"
+        
+        DispatchQueue.main.async {
+            self.title = starship.name
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    func getVehicleAndUpdateCollection(vehicle: Vehicle) {
+        textForCollection = "Model: \(vehicle.model) \nManufacturer: \(vehicle.manufacturer) \nCost: \(vehicle.cost) \nLength: \(vehicle.length) \nMaximum speed: \(vehicle.maximumSpeed) \nCrew: \(vehicle.crew) \nPassengers: \(vehicle.passengers) \nCargo capacity: \(vehicle.cargoCapacity) \nVehicle class: \(vehicle.starshipClass)"
+        
+        DispatchQueue.main.async {
+            self.title = vehicle.name
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    func getCharacterAndUpdateCollection(character: Character) {
+        textForCollection = "Birth year: \(character.birthYear) \n\nGender: \(character.gender) \n\nEye color: \(character.eyeColor) \n\nHair color: \(character.hairColor) \n\nSkin Color: \(character.skinColor) \n\nHeight: \(character.height)"
+        
+        DispatchQueue.main.async {
+            self.title = character.name
+            self.collectionView?.reloadData()
+        }
+    }
+    
 
     private func getNameForPicture() -> String {
         var pictureName = ""
@@ -178,9 +141,7 @@ extension DetailViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
             }
         cell.configurePicture(image: UIImage(named: getNameForPicture()) ?? UIImage())
-
-        cell.addText(self.addText())
-
+        cell.addText(textForCollection)
         return cell
     }
 }

@@ -17,13 +17,12 @@ struct Planet: Codable {
     let climate: String
     let diameter: String
     let gravity: String
-    let residents: [String]
     let rotationPeriod: String
     let terrain: String
     let surfaceWater: String
 
     enum CodingKeys: String, CodingKey {
-        case name, climate, diameter, gravity, residents, terrain
+        case name, climate, diameter, gravity, terrain
         case rotationPeriod = "rotation_period"
         case surfaceWater = "surface_water"
     }

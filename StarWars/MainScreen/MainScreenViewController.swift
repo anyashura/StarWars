@@ -63,6 +63,15 @@ final class MainScreenViewController: UIViewController {
         let space: CGFloat = (layout.minimumInteritemSpacing ) + 20
         layout.itemSize = CGSize(width: (view.frame.size.width-space)/2, height: (view.frame.size.width-space)/2)
     }
+    
+    private func gotoCategoryVC(id: Int) {
+        let category = categories[id]
+        Constants.url = category.url
+        UserDefaults.standard.set(Constants.url, forKey: Constants.nameKey)
+        UserDefaults.standard.set(category.title, forKey: Constants.categoryKey)
+        let viewController = CategoryViewController()
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
     // MARK: - Extensions
@@ -70,12 +79,8 @@ extension MainScreenViewController: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let category = categories[indexPath.row]
-        Constants.url = category.url
-        UserDefaults.standard.set(Constants.url, forKey: Constants.nameKey)
-        UserDefaults.standard.set(category.title, forKey: Constants.categoryKey)
-        let viewController = CategoryViewController()
-        navigationController?.pushViewController(viewController, animated: true)
+        gotoCategoryVC(id: indexPath.row)
+
     }
 }
 

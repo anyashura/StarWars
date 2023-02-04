@@ -24,6 +24,8 @@ final class ReadyPageViewController: UIViewController {
     private lazy var starWarsImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: Constants.imageName)
+        image.layer.cornerRadius = 10
+        image.backgroundColor = .black
         image.contentMode = UIView.ContentMode.scaleAspectFit
         return image
     }()

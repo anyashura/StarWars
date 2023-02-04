@@ -29,6 +29,6 @@ struct Vehicle: Codable {
         case cost = "cost_in_credits"
         case maximumSpeed = "max_atmosphering_speed"
         case cargoCapacity = "cargo_capacity"
-        case starshipClass = "starship_class"
+        case starshipClass = "vehicle_class"
     }
 }

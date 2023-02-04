@@ -20,10 +20,9 @@ struct Character: Codable {
     let hairColor: String
     let skinColor: String
     let height: String
-    let homeworld: String
 
     enum CodingKeys: String, CodingKey {
-        case name, gender, height, homeworld
+        case name, gender, height
         case birthYear = "birth_year"
         case eyeColor = "eye_color"
         case hairColor = "hair_color"

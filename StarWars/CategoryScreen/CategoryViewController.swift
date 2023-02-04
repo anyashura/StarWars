@@ -20,7 +20,7 @@ final class CategoryViewController: UIViewController {
 
     // MARK: - Properties
     private let spinner = UIActivityIndicatorView(style: .large)
-    private let network = NetworkManager()
+    private let network: NetworkService = NetworkManager()
     private var allObjects: [ParsingModel]?
     private var collectionView: UICollectionView?
     private var backgroundImage: UIImageView?
@@ -106,7 +106,7 @@ extension CategoryViewController: UICollectionViewDataSource {
         cell.configure(
             name: allObjects?[indexPath.row].title ?? "",
             title: allObjects?[indexPath.row].name ?? "",
-            image: UIImage(named: UserDefaults.standard.string(forKey: Constants.categoryKey)! + String(indexPath.row + 1)) ?? UIImage()
+            image: UIImage(named: (UserDefaults.standard.string(forKey: Constants.categoryKey) ?? "") + String(indexPath.row + 1)) ?? UIImage()
 
             )
         return cell

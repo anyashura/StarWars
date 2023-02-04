@@ -19,13 +19,12 @@ struct Species: Codable {
     let eyeColors: String
     let hairColors: String
     let skinColors: String
-    let homeworld: String
     let language: String
     let averageHeight: String
     let averageLifespan: String
 
     enum CodingKeys: String, CodingKey {
-        case name, homeworld, classification, designation, language
+        case name, classification, designation, language
         case eyeColors = "eye_colors"
         case hairColors = "hair_colors"
         case skinColors = "skin_colors"

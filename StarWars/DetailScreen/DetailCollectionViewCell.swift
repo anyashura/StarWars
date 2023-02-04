@@ -18,7 +18,11 @@ class DetailCollectionViewCell: UICollectionViewCell {
     private lazy var picture: UIImageView = {
         let image = UIImageView(frame: UIScreen.main.bounds)
         image.image = UIImage(named: "")
-        image.contentMode = UIView.ContentMode.scaleAspectFit
+        image.layer.cornerRadius = 10
+        image.layer.borderColor = UIColor.darkGray.cgColor
+        image.layer.borderWidth = 1
+        image.layer.masksToBounds = true
+        image.contentMode = UIView.ContentMode.scaleAspectFill
         return image
     }()
 
@@ -26,6 +30,7 @@ class DetailCollectionViewCell: UICollectionViewCell {
         let text = UITextView()
         text.textAlignment = .natural
         text.isEditable = false
+        text.isSelectable = false
         text.font = UIFont(name: Constants.fontName, size: 18)
         text.showsVerticalScrollIndicator = false
         text.backgroundColor = .clear
@@ -51,7 +56,8 @@ class DetailCollectionViewCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         picture.snp.makeConstraints {
-            $0.top.left.right.equalTo(contentView)
+            $0.top.equalTo(contentView)
+            $0.left.right.equalTo(contentView).inset(10)
             $0.bottom.equalTo(contentView.snp.centerY)
         }
         infoTextView.snp.makeConstraints {
